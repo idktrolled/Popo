@@ -1,5 +1,6 @@
 package;
 
+#if (html5 || flash || cpp)
 import flixel.FlxG;
 import flixel.util.FlxSignal;
 import flixel.util.FlxTimer;
@@ -198,3 +199,4 @@ class NGio
 		}
 	}
 }
+#end
