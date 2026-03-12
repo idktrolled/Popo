@@ -22,11 +22,13 @@ jobs:
           haxelib install flixel-ui 2.4.0
           haxelib install newgrounds 1.1.5
           haxelib install hscript 2.6.0
+          haxelib install hashlink
           haxelib git linc_luajit https://github.com/AndreiRudenko/linc_luajit
           haxelib git faxe https://github.com/ashea-code/faxe
           haxelib git polymod https://github.com/larsiusprime/polymod
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib run lime rebuild hxcpp
+          haxelib list
       - name: configure android
         run: |
           haxelib run lime config ANDROID_SDK $ANDROID_HOME
