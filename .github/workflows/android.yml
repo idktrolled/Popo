@@ -27,7 +27,6 @@ jobs:
           haxelib git polymod https://github.com/larsiusprime/polymod
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib run lime rebuild hxcpp
-          
       - name: configure android
         run: |
           haxelib run lime config ANDROID_SDK $ANDROID_HOME
