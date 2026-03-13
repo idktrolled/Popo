@@ -22,7 +22,7 @@ jobs:
           haxelib install flixel-ui 2.4.0
           haxelib install newgrounds 1.2.0
           haxelib install hscript
-          haxelib install polymod 1.6.0
+          haxelib install polymod 1.5.4
           haxelib git linc_luajit https://github.com/AndreiRudenko/linc_luajit
           haxelib git faxe https://github.com/ashea-code/faxe
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
