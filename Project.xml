@@ -16,8 +16,6 @@
 	<set name="SWF_VERSION" value="11.8" />
 
 	<!-- ____________________________ Define Settings ___________________________ -->
-
-	<define name="sys" if="desktop" />
 	
 	<!-- ____________________________ Window Settings ___________________________ -->
 
@@ -29,7 +27,8 @@
 
 	<!--Desktop-specific-->
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
-
+	<define name="windows" if="desktop" />
+    <define name="sys" if="desktop" />
 	<!--Mobile-specific-->
 	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" resizable="false"/>
 
