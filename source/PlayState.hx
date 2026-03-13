@@ -62,13 +62,13 @@ import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
 
-/*#if windows
+#if windows
 import Discord.DiscordClient;
 #end
 #if cpp
 import Sys;
 import sys.FileSystem;
-#end*/
+#end
 
 using StringTools;
 
@@ -475,9 +475,9 @@ class PlayState extends MusicBeatState
 		repPresses = 0;
 		repReleases = 0;
 
-		/*#if sys
+		#if sys
 		executeModchart = FileSystem.exists(Paths.lua(PlayState.SONG.song.toLowerCase()  + "/modchart"));
-		#end*/
+		#end
 		#if !cpp
 		executeModchart = false; // FORCE disable for non cpp targets //Hey, wtf is 'cpp targets'? -Haz
 		#end
