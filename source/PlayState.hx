@@ -65,10 +65,10 @@ import openfl.filters.ShaderFilter;
 #if desktop
 import Discord.DiscordClient;
 #end
-#if cpp
+/*#if cpp
 import Sys;
 import sys.FileSystem;
-#end
+#end*/
 
 using StringTools;
 
