@@ -20,7 +20,6 @@ jobs:
           haxelib install flixel-addons 2.11.0
           haxelib install flixel-ui 2.4.0
           haxelib install newgrounds 1.2.0
-          haxelib install hscript
           haxelib install linc_luajit
           haxelib install hscript-ex
           haxelib git polymod https://github.com/swordcube/scriptless-polymod
