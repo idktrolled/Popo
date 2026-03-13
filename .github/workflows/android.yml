@@ -14,7 +14,7 @@ jobs:
       - name: run libraries from haxe
         run: |
           haxelib setup ~/haxelib
-          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
+          haxelib install hxcpp 
           haxelib install lime
           haxelib install openfl 9.1.0
           haxelib install flixel 4.11.0
@@ -26,7 +26,6 @@ jobs:
           haxelib git faxe https://github.com/ashea-code/faxe
           haxelib git polymod https://github.com/larsiusprime/polymod
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
-          haxelib run lime rebuild hxcpp
       - name: configure android
         run: |
           haxelib run lime config ANDROID_SDK $ANDROID_HOME
