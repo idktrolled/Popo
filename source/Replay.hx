@@ -1,4 +1,4 @@
-#if sys
+#if desktop
 import sys.io.File;
 #end
 import Controls.Control;
@@ -76,7 +76,7 @@ class Replay
 
         var data:String = Json.stringify(json);
 
-        #if sys
+        #if desktop
         File.saveContent("assets/replays/replay-" + PlayState.SONG.song + "-time" + Date.now().getTime() + ".kadeReplay", data);
         #end
     }
@@ -84,7 +84,7 @@ class Replay
 
     public function LoadFromJSON()
     {
-        #if sys
+        #if desktop
         trace('loading ' + Sys.getCwd() + 'assets/replays/' + path + ' replay...');
         try
         {
