@@ -1,6 +1,6 @@
 package;
 
-/*#if windows
+#if windows
 import Sys.sleep;
 import discord_rpc.DiscordRpc;
 
@@ -86,4 +86,4 @@ class DiscordClient
 		//trace('Discord RPC Updated. Arguments: $details, $state, $smallImageKey, $hasStartTimestamp, $endTimestamp');
 	}
 }
-#end*/
+#end
