@@ -22,6 +22,7 @@ jobs:
           haxelib install newgrounds 1.2.0
           haxelib install linc_luajit
           haxelib install hscript-ex
+          haxelib install hscript
           haxelib git polymod https://github.com/swordcube/scriptless-polymod
           haxelib git hxcpp https://github.com/haxefoundation/hxcpp 
           haxelib git faxe https://github.com/ashea-code/faxe
