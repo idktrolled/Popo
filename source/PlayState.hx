@@ -62,10 +62,10 @@ import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
 
-#if windows
+/*#if windows
 import Discord.DiscordClient;
 #end
-/*#if cpp
+#if cpp
 import Sys;
 import sys.FileSystem;
 #end*/
