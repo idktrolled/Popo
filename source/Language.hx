@@ -1,5 +1,14 @@
 package;
-
+#if LUA_ALLOWED
+import llua.*;
+import llua.Lua;
+#end
+#if sys
+import sys.*;
+import sys.io.*;
+#elseif js
+import js.html.*;
+#end
 class Language
 {
 	public static var defaultLangName:String = 'English (US)'; //en-US
