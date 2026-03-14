@@ -67,7 +67,6 @@ import Discord.DiscordClient;
 
 import Sys;
 import sys.FileSystem;
-#end
 
 using StringTools;
 
