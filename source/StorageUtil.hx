@@ -16,6 +16,7 @@ class StorageUtil
 		return #if android haxe.io.Path.addTrailingSlash(AndroidContext.getExternalFilesDir()) #elseif ios lime.system.System.documentsDirectory #else Sys.getCwd() #end;
 	inline public static function getPhrase(key:String, ?defaultPhrase:String, values:Array<Dynamic> = null):String
 	{
+		#if random
 		var str:String = phrases.get(formatKey(key));
 		if(str == null) str = defaultPhrase;
 		#else
