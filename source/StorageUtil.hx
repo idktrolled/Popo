@@ -1,5 +1,10 @@
 package;
+import flixel.FlxG;
 import flixel.util.FlxTimer;
+#if sys
+import sys.*;
+import sys.io.*;
+#end
 #if android
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
@@ -9,6 +14,23 @@ class StorageUtil
 	#if sys
 	public static function getStorageDirectory():String
 		return #if android haxe.io.Path.addTrailingSlash(AndroidContext.getExternalFilesDir()) #elseif ios lime.system.System.documentsDirectory #else Sys.getCwd() #end;
+	inline public static function getPhrase(key:String, ?defaultPhrase:String, values:Array<Dynamic> = null):String
+	{
+		var str:String = phrases.get(formatKey(key));
+		if(str == null) str = defaultPhrase;
+		#else
+		var str:String = defaultPhrase;
+		#end
+
+		if(str == null)
+			str = key;
+		
+		if(values != null)
+			for (num => value in values)
+				str = str.replace('{${num+1}}', value);
+
+		return str;
+	}
 	public static function showPopUp(message:String, title:String):Void
 	{
 		FlxG.stage.window.alert(message, title);
@@ -23,11 +45,11 @@ class StorageUtil
 
 			File.saveContent('$folder/$fileName', fileData);
 			if (alert)
-				showPopUp(LanguageBasic.getPhrase('file_save_success', '{1} has been saved.', [fileName]), LanguageBasic.getPhrase('mobile_success', "Success!"));
+				showPopUp(getPhrase('file_save_success', '{1} has been saved.', [fileName]), getPhrase('mobile_success', "Success!"));
 		}
 		catch (e:Dynamic)
 			if (alert)
-				showPopUp(LanguageBasic.getPhrase('file_save_fail', '{1} couldn\'t be saved.\n({2})', [fileName, e.message]), LanguageBasic.getPhrase('mobile_error', "Error!"));
+				showPopUp(getPhrase('file_save_fail', '{1} couldn\'t be saved.\n({2})', [fileName, e.message]), getPhrase('mobile_error', "Error!"));
 			else
 				trace('$fileName couldn\'t be saved. (${e.message})');
 	}
@@ -50,8 +72,8 @@ class StorageUtil
 			&& !Permissions.getGrantedPermissions().contains('android.permission.READ_MEDIA_IMAGES'))
 			|| (VERSION.SDK_INT < VERSION_CODES.TIRAMISU
 				&& !Permissions.getGrantedPermissions().contains('android.permission.READ_EXTERNAL_STORAGE')))
-			showPopUp(LanguageBasic.getPhrase('permissions_message', 'If you accepted the permissions you are all good!\nIf you didn\'t then expect a crash\nPress OK to see what happens'),
-				LanguageBasic.getPhrase('mobile_notice', "Notice!"));
+			showPopUp(getPhrase('permissions_message', 'If you accepted the permissions you are all good!\nIf you didn\'t then expect a crash\nPress OK to see what happens'),
+			          getPhrase('mobile_notice', "Notice!"));
 		try
 		{
 			if (!FileSystem.exists(StorageUtil.getStorageDirectory()))
@@ -59,7 +81,7 @@ class StorageUtil
 		}
 		catch (e:Dynamic)
 		{
-			showPopUp(LanguageBasic.getPhrase('create_directory_error', 'Please create directory to\n{1}\nPress OK to close the game', [StorageUtil.getStorageDirectory()]), LanguageBasic.getPhrase('mobile_error', "Error!"));
+			showPopUp(getPhrase('create_directory_error', 'Please create directory to\n{1}\nPress OK to close the game', [StorageUtil.getStorageDirectory()]), getPhrase('mobile_error', "Error!"));
 			lime.system.System.exit(1);
 		}
 
@@ -70,7 +92,7 @@ class StorageUtil
 		}
 		catch (e:Dynamic)
 		{
-			showPopUp(LanguageBasic.getPhrase('create_directory_error', 'Please create directory to\n{1}\nPress OK to close the game', [StorageUtil.getExternalStorageDirectory()]), LanguageBasic.getPhrase('mobile_error', "Error!"));
+			showPopUp(getPhrase('create_directory_error', 'Please create directory to\n{1}\nPress OK to close the game', [StorageUtil.getExternalStorageDirectory()]), getPhrase('mobile_error', "Error!"));
 			lime.system.System.exit(1);
 		}
 	}
