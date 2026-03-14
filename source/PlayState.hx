@@ -455,7 +455,6 @@ class PlayState extends MusicBeatState
 		#end
 		return toBeCalled;
 	}
-	#end
 	// LUA SHIT
 
 	override public function create()
