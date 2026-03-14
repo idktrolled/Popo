@@ -15,6 +15,7 @@ jobs:
       - name: Setup Java JDK
         uses: actions/setup-java@main
         with:
+          distribution: temurin
           java-version: 11
       - name: setup-haxe
         uses: krdlab/setup-haxe@master
