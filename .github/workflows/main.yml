@@ -10,7 +10,7 @@ jobs:
       - name: setup-haxe
         uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.3.7
+          haxe-version: 4.2.5
       - name: run libraries from haxe
         run: |
           haxelib setup ~/haxelib
@@ -24,7 +24,7 @@ jobs:
           haxelib install hscript-ex
           haxelib git linc_luajit https://github.com/andreirudenko/linc_luajit
           haxelib git polymod https://github.com/swordcube/scriptless-polymod
-          haxelib git hxcpp https://github.com/haxefoundation/hxcpp 
+           
           haxelib git faxe https://github.com/ashea-code/faxe
           haxelib git discord_rpc https://github.com/aidan63/linc_discord-rpc
       - name: configure android
@@ -33,7 +33,7 @@ jobs:
           haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_LATEST_HOME
           haxelib run lime config JAVA_HOME $JAVA_HOME_17_X64
           haxelib run lime config ANDROID_SETUP true
-          haxelib run lime rebuild hxcpp
+          
       - name: compile
         run: haxelib run lime build android
       - name: upload
