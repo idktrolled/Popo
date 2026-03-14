@@ -5681,7 +5681,6 @@ class PlayState extends MusicBeatState
 			setVar('curBeat',curBeat);
 			callLua('beatHit',[curBeat]);
 		}
-		#end
 
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
 		{
