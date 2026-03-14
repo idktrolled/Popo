@@ -36,7 +36,7 @@ class StorageUtil
 
 			File.saveContent('$folder/$fileName', fileData);
 			if (alert)
-				CoolUtil.showPopUp(('file_save_success', 'has been saved.', [fileName]), ('mobile_success', "Success!"));
+				CoolUtil.showPopUp(fileName + " has been saved.", "Success!");
 		}
 		catch (e:Dynamic)
 			if (alert)
