@@ -1,7 +1,6 @@
 package;
 
 #if COPYSTATE_ALLOWED
-import states.TitleState;
 import lime.utils.Assets as LimeAssets;
 import openfl.utils.Assets as OpenFLAssets;
 import openfl.utils.ByteArray;
