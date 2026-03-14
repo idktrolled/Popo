@@ -1,5 +1,9 @@
 package;
 import flixel.util.FlxTimer;
+#if android
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
+#end
 class StorageUtil
 {
 	#if sys
