@@ -36,11 +36,11 @@ class StorageUtil
 
 			File.saveContent('$folder/$fileName', fileData);
 			if (alert)
-				CoolUtil.showPopUp(Language.getPhrase('file_save_success', '{1} has been saved.', [fileName]), Language.getPhrase('mobile_success', "Success!"));
+				CoolUtil.showPopUp(('file_save_success', '{1} has been saved.', [fileName]), ('mobile_success', "Success!"));
 		}
 		catch (e:Dynamic)
 			if (alert)
-				CoolUtil.showPopUp(Language.getPhrase('file_save_fail', '{1} couldn\'t be saved.\n({2})', [fileName, e.message]), Language.getPhrase('mobile_error', "Error!"));
+				CoolUtil.showPopUp(('file_save_fail', '{1} couldn\'t be saved.\n({2})', [fileName, e.message]), ('mobile_error', "Error!"));
 			else
 				trace('$fileName couldn\'t be saved. (${e.message})');
 	}
@@ -64,8 +64,7 @@ class StorageUtil
 			&& !AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_MEDIA_IMAGES'))
 			|| (AndroidVersion.SDK_INT < AndroidVersionCode.TIRAMISU
 				&& !AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_EXTERNAL_STORAGE')))
-			CoolUtil.showPopUp(Language.getPhrase('permissions_message', 'If you accepted the permissions you are all good!\nIf you didn\'t then expect a crash\nPress OK to see what happens'),
-				Language.getPhrase('mobile_notice', "Notice!"));
+			CoolUtil.showPopUp(('permissions_message', 'If you accepted the permissions you are all good!\nIf you didn\'t then expect a crash\nPress OK to see what happens'), ('mobile_notice', "Notice!"));
 
 		try
 		{
@@ -74,7 +73,7 @@ class StorageUtil
 		}
 		catch (e:Dynamic)
 		{
-			CoolUtil.showPopUp(Language.getPhrase('create_directory_error', 'Please create directory to\n{1}\nPress OK to close the game', [StorageUtil.getStorageDirectory()]), Language.getPhrase('mobile_error', "Error!"));
+			CoolUtil.showPopUp(('create_directory_error', 'Please create directory to\n{1}\nPress OK to close the game', [StorageUtil.getStorageDirectory()]), ('mobile_error', "Error!"));
 			lime.system.System.exit(1);
 		}
 
@@ -85,7 +84,7 @@ class StorageUtil
 		}
 		catch (e:Dynamic)
 		{
-			CoolUtil.showPopUp(Language.getPhrase('create_directory_error', 'Please create directory to\n{1}\nPress OK to close the game', [StorageUtil.getExternalStorageDirectory()]), Language.getPhrase('mobile_error', "Error!"));
+			CoolUtil.showPopUp(('create_directory_error', 'Please create directory to\n{1}\nPress OK to close the game', [StorageUtil.getExternalStorageDirectory()]), ('mobile_error', "Error!"));
 			lime.system.System.exit(1);
 		}
 	}
