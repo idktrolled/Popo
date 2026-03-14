@@ -1,6 +1,9 @@
 package;
 
 import lime.utils.Assets;
+#if android
+import android.Tools;
+#end
 
 using StringTools;
 
