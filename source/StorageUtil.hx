@@ -36,11 +36,11 @@ class StorageUtil
 
 			File.saveContent('$folder/$fileName', fileData);
 			if (alert)
-				CoolUtil.showPopUp(('file_save_success', '{1} has been saved.', [fileName]), ('mobile_success', "Success!"));
+				CoolUtil.showPopUp(('file_save_success', 'has been saved.', [fileName]), ('mobile_success', "Success!"));
 		}
 		catch (e:Dynamic)
 			if (alert)
-				CoolUtil.showPopUp(('file_save_fail', '{1} couldn\'t be saved.\n({2})', [fileName, e.message]), ('mobile_error', "Error!"));
+				CoolUtil.showPopUp(('file_save_fail', 'couldn\'t be saved.\n()', [fileName, e.message]), ('mobile_error', "Error!"));
 			else
 				trace('$fileName couldn\'t be saved. (${e.message})');
 	}
@@ -73,7 +73,7 @@ class StorageUtil
 		}
 		catch (e:Dynamic)
 		{
-			CoolUtil.showPopUp(('create_directory_error', 'Please create directory to\n{1}\nPress OK to close the game', [StorageUtil.getStorageDirectory()]), ('mobile_error', "Error!"));
+			CoolUtil.showPopUp(('create_directory_error', 'Please create directory to\n\nPress OK to close the game', [StorageUtil.getStorageDirectory()]), ('mobile_error', "Error!"));
 			lime.system.System.exit(1);
 		}
 
