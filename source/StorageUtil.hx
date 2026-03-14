@@ -3,7 +3,8 @@ import flixel.util.FlxTimer;
 class StorageUtil
 {
 	#if sys
-	public static function getStorageDirectory():String return #if android haxe.io.Path.addTrailingSlash(Context.getExternalFilesDir()) #elseif ios lime.system.System.documentsDirectory #else Sys.getCwd() #end;
+	public static function getStorageDirectory():String
+		return #if android haxe.io.Path.addTrailingSlash(AndroidContext.getExternalFilesDir()) #elseif ios lime.system.System.documentsDirectory #else Sys.getCwd() #end;
 	public static function showPopUp(message:String, title:String):Void
 	{
 		FlxG.stage.window.alert(message, title);
