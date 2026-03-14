@@ -16,6 +16,16 @@ import android.os.Build.VERSION as AndroidVersion;
 import android.os.Build.VERSION_CODES as AndroidVersionCode;
 import android.os.BatteryManager as AndroidBatteryManager;
 #end
+
+@:structInit class SaveVariables {
+  #if android
+	public var storageType:String = "EXTERNAL";
+	#end
+}
+
+class ClientPrefs {
+  public static var data:SaveVariables = {};
+}
 class SUtil
 {
 	#if sys
