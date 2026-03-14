@@ -40,7 +40,7 @@ class StorageUtil
 		}
 		catch (e:Dynamic)
 			if (alert)
-				CoolUtil.showPopUp(('file_save_fail', 'couldn\'t be saved.\n()', [fileName, e.message]), ('mobile_error', "Error!"));
+				CoolUtil.showPopUp(fileName + " couldn't be saved.\n(" + e.message + ")", "Error!");
 			else
 				trace('$fileName couldn\'t be saved. (${e.message})');
 	}
@@ -64,7 +64,7 @@ class StorageUtil
 			&& !AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_MEDIA_IMAGES'))
 			|| (AndroidVersion.SDK_INT < AndroidVersionCode.TIRAMISU
 				&& !AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_EXTERNAL_STORAGE')))
-			CoolUtil.showPopUp(('permissions_message', 'If you accepted the permissions you are all good!\nIf you didn\'t then expect a crash\nPress OK to see what happens'), ('mobile_notice', "Notice!"));
+			CoolUtil.showPopUp("If you accepted the permissions you are all good!\nIf you didn't then expect a crash\nPress OK to see what happens", "Notice!");
 
 		try
 		{
@@ -73,7 +73,7 @@ class StorageUtil
 		}
 		catch (e:Dynamic)
 		{
-			CoolUtil.showPopUp(('create_directory_error', 'Please create directory to\n\nPress OK to close the game', [StorageUtil.getStorageDirectory()]), ('mobile_error', "Error!"));
+			CoolUtil.showPopUp("Please create directory to\n" + StorageUtil.getStorageDirectory() + "\n\nPress OK to close the game", "Error!");
 			lime.system.System.exit(1);
 		}
 
@@ -84,7 +84,7 @@ class StorageUtil
 		}
 		catch (e:Dynamic)
 		{
-			CoolUtil.showPopUp(('create_directory_error', 'Please create directory to\n{1}\nPress OK to close the game', [StorageUtil.getExternalStorageDirectory()]), ('mobile_error', "Error!"));
+			CoolUtil.showPopUp("Please create directory to\n" + StorageUtil.getExternalStorageDirectory() + "\nPress OK to close the game", "Error!");
 			lime.system.System.exit(1);
 		}
 	}
