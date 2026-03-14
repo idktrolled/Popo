@@ -2775,7 +2775,7 @@ class PlayState extends MusicBeatState
 				
 				if(!(SONG.song.toLowerCase() == "termination" || SONG.song.toLowerCase() == "redacted")) //Disables usual intro for Termination AND REDACTED
 					FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
-				#else
+				
 				if(!(SONG.song.toLowerCase() == "redacted")) //Disables usual intro for REDACTED.
 					FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 				
