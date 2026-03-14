@@ -17,7 +17,6 @@ import llua.Convert;
 import llua.Lua;
 import llua.State;
 import llua.LuaL;
-#end
 
 import lime.app.Application;
 import lime.media.AudioContext;
