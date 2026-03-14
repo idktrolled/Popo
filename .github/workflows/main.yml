@@ -10,7 +10,7 @@ jobs:
       - name: setup-haxe
         uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.3.4
+          haxe-version: 4.3.7
       - name: run libraries from haxe
         run: |
           haxelib setup ~/haxelib
@@ -20,9 +20,9 @@ jobs:
           haxelib install flixel-addons 2.11.0
           haxelib install flixel-ui 2.4.0
           haxelib install newgrounds 1.2.0
-          haxelib install linc_luajit
-          haxelib install hscript-ex
           haxelib install hscript
+          haxelib git linc_luajit https://github.com/andreirudenko/linc_luajit
+          haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
           haxelib git polymod https://github.com/swordcube/scriptless-polymod
           haxelib git hxcpp https://github.com/haxefoundation/hxcpp 
           haxelib git faxe https://github.com/ashea-code/faxe
