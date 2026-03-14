@@ -26,7 +26,7 @@ import android.os.BatteryManager as AndroidBatteryManager;
 class ClientPrefs {
   public static var data:SaveVariables = {};
 }
-class SUtil
+class StorageUtil
 {
 	#if sys
 	// root directory, used for handling the saved storage type and path
