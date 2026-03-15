@@ -47,8 +47,6 @@ import android.os.Build.VERSION_CODES as AndroidVersionCode;
 import android.os.BatteryManager as AndroidBatteryManager;
 #end
 
-import StringTools;
-
 class CopyState extends MusicBeatState
 {
 	public static var locatedFiles:Array<String> = [];
