@@ -13,6 +13,10 @@ import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import StorageUtil;
+import openfl.events.UncaughtErrorEvent;
+import haxe.CallStack;
+import haxe.io.Path;
+
 class Main extends Sprite
 {
 	var gameWidth:Int = 1280; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
@@ -46,6 +50,8 @@ class Main extends Sprite
 		#end
 		Sys.setCwd(StorageUtil.getStorageDirectory());
 		#end
+
+		CrashHandler.init()
 		
 		if (stage != null)
 		{
