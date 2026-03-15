@@ -103,17 +103,13 @@ class StorageUtil
 	public static function requestPermissions():Void
 	{
 		if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU)
-			Permissions.requestPermissions(['READ_MEDIA_IMAGES', 'READ_MEDIA_VIDEO', 'READ_MEDIA_AUDIO']);
+			Permissions.requestPermissions(['READ_MEDIA_IMAGES', 'READ_MEDIA_VIDEO', 'READ_MEDIA_AUDIO', 'READ_MEDIA_VISUAL_USER_SELECTED']);
 		else
 			Permissions.requestPermissions(['READ_EXTERNAL_STORAGE', 'WRITE_EXTERNAL_STORAGE']);
 
-		if (!Environment.isExternalStorageManager())
-		{
-			if (VERSION.SDK_INT >= VERSION_CODES.S)
-				Settings.requestSetting('REQUEST_MANAGE_MEDIA');
-			Settings.requestSetting('MANAGE_APP_ALL_FILES_ACCESS_PERMISSION');
-		}
-
+		if (!AndroidEnvironment.isExternalStorageManager())
+			AndroidSettings.requestSetting('MANAGE_APP_ALL_FILES_ACCESS_PERMISSION');
+		
 		if ((VERSION.SDK_INT >= VERSION_CODES.TIRAMISU
 			&& !Permissions.getGrantedPermissions().contains('android.permission.READ_MEDIA_IMAGES'))
 			|| (VERSION.SDK_INT < VERSION_CODES.TIRAMISU
