@@ -6,6 +6,7 @@ import openfl.utils.Assets as OpenFLAssets;
 import flixel.addons.util.FlxAsyncLoop;
 import openfl.utils.ByteArray;
 import haxe.io.Path;
+import flixel.FlxSprite;
 #if sys
 import sys.*;
 import sys.io.*;
