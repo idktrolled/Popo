@@ -18,16 +18,6 @@ import android.os.Build.VERSION_CODES;
 
 using StringTools;
 
-@:structInit class SaveVariables {
-  #if android
-	public var storageType:String = "EXTERNAL";
-	#end
-}
-
-class ClientPrefs {
-  public static var data:SaveVariables = {};
-}
-
 class StorageUtil
 {
 	#if sys
