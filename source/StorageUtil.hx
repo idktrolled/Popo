@@ -23,21 +23,19 @@ class StorageUtil
 	#if sys
 	public static final rootDir:String = LimeSystem.applicationStorageDirectory;
 
-	public static function getStorageDirectory(?force:Bool = false):String
-	{
-		var daPath:String = '';
-		#if android
-		if (!FileSystem.exists(rootDir + 'storagetype.txt'))
-			File.saveContent(rootDir + 'storagetype.txt', ClientPrefs.data.storageType);
-		var curStorageType:String = File.getContent(rootDir + 'storagetype.txt');
-		daPath = force ? StorageType.fromStrForce(curStorageType) : StorageType.fromStr(curStorageType);
-		daPath = Path.addTrailingSlash(daPath);
-		#elseif ios
-		daPath = LimeSystem.documentsDirectory;
-		#end
+	public static function getStorageDirectory():String
+    {
+	var daPath:String = '';
 
-		return daPath;
-	}
+	#if android
+	daPath = StorageType.fromStrForce("EXTERNAL");
+	daPath = Path.addTrailingSlash(daPath);
+	#elseif ios
+	daPath = LimeSystem.documentsDirectory;
+	#end
+
+	return daPath;
+    }
 
 	public static function createDirectories(directory:String):Void
 	{
