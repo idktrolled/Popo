@@ -14,6 +14,15 @@ import android.*;
 import android.os.*;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+import android.content.Context as AndroidContext;
+import android.widget.Toast as AndroidToast;
+import android.os.Environment as AndroidEnvironment;
+import android.Permissions as AndroidPermissions;
+import android.Settings as AndroidSettings;
+import android.Tools as AndroidTools;
+import android.os.Build.VERSION as AndroidVersion;
+import android.os.Build.VERSION_CODES as AndroidVersionCode;
+import android.os.BatteryManager as AndroidBatteryManager;
 #end
 
 using StringTools;
@@ -23,20 +32,18 @@ class StorageUtil
 	#if sys
 	public static final rootDir:String = LimeSystem.applicationStorageDirectory;
 
-	public static function getStorageDirectory(?force:Bool = false):String
-	{
-		var daPath:String = '';
-		#if android
-		if (!FileSystem.exists(rootDir + 'storagetype.txt'))
-			File.saveContent(rootDir + 'storagetype.txt', ClientPrefs.data.storageType);
-		var curStorageType:String = File.getContent(rootDir + 'storagetype.txt');
-		daPath = force ? StorageType.fromStrForce(curStorageType) : StorageType.fromStr(curStorageType);
-		daPath = Path.addTrailingSlash(daPath);
-		#elseif ios
-		daPath = LimeSystem.documentsDirectory;
-		#end
+	public static function getStorageDirectory():String
+    {
+	var daPath:String = '';
 
-		return daPath;
+	#if android
+	daPath = StorageType.fromStrForce("EXTERNAL");
+	daPath = Path.addTrailingSlash(daPath);
+	#elseif ios
+	daPath = LimeSystem.documentsDirectory;
+	#end
+
+	return daPath;
 	}
 
 	public static function mkDirs(directory:String):Void
@@ -111,12 +118,12 @@ class StorageUtil
 
 		try
 		{
-			if (!FileSystem.exists(SUtil.getStorageDirectory()))
-				mkDirs(SUtil.getStorageDirectory());
+			if (!FileSystem.exists(StorageUtil.getStorageDirectory()))
+				mkDirs(StorageUtil.getStorageDirectory());
 		}
 		catch (e:Dynamic)
 		{
-			showPopUp('Please create directory to\n' + SUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
+			showPopUp('Please create directory to\n' + StorageUtil.getStorageDirectory() + '\nPress OK to close the game', 'Error!');
 			LimeSystem.exit(1);
 		}
 	}
