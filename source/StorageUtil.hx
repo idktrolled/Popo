@@ -12,8 +12,7 @@ import android.content.*;
 import android.widget.*;
 import android.*;
 import android.os.*;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
+import android.os.Build.*;
 #end
 
 using StringTools;
