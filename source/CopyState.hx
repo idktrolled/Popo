@@ -143,7 +143,7 @@ class CopyState extends MusicBeatState
 		{
 			var directory = Path.directory(file);
 			if (!FileSystem.exists(directory))
-				SUtil.mkDirs(directory);
+				StorageUtil.mkDirs(directory);
 			try
 			{
 				if (OpenFLAssets.exists(getFile(file)))
