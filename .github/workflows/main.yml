@@ -41,7 +41,7 @@ jobs:
           haxelib run lime config ANDROID_SETUP true
           haxelib run lime rebuild hxcpp
       - name: compile
-        run: haxelib run lime build android
+        run: haxelib run lime build android -ONLY_ARMV7
       - name: upload
         uses: actions/upload-artifact@main
         with:
