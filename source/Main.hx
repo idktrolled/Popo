@@ -41,7 +41,7 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-
+		#if mobile
 		#if android
 		StorageUtil.requestPermissions();
 		#end
