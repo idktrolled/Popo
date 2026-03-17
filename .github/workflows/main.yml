@@ -3,7 +3,7 @@ on:
  push:
 jobs:
   mobile:
-    runs-on: ubuntu-latest
+    runs-on: macos-15
     steps:
       - name: checkout
         uses: actions/checkout@main
