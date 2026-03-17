@@ -1,4 +1,4 @@
-name: maina
+name: main
 on:
  push:
 jobs:
