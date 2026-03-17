@@ -9,7 +9,7 @@ class Language
 
 	public static function reloadPhrases()
 	{
-		#if TRANSLATIONS_ALLOWED
+		/*#if TRANSLATIONS_ALLOWED
 		var langFile:String = ClientPrefs.data.language;
 		var loadedText:Array<String> = Mods.mergeAllTextsNamed('data/$langFile.lang');
 		//trace(loadedText);
@@ -51,7 +51,7 @@ class Language
 		AlphaCharacter.loadAlphabetData(alphaPath);
 		#else
 		AlphaCharacter.loadAlphabetData();
-		#end
+		#end*/
 	}
 
 	inline public static function getPhrase(key:String, ?defaultPhrase:String, values:Array<Dynamic> = null):String
@@ -77,22 +77,22 @@ class Language
 	// More optimized for file loading
 	inline public static function getFileTranslation(key:String)
 	{
-		#if TRANSLATIONS_ALLOWED
+		/*#if TRANSLATIONS_ALLOWED
 		var str:String = phrases.get(key.trim().toLowerCase());
 		if(str != null) key = str;
-		#end
+		#end*/
 		return key;
 	}
 	
-	#if TRANSLATIONS_ALLOWED
+	/*#if TRANSLATIONS_ALLOWED
 	inline static private function formatKey(key:String)
 	{
 		final hideChars = ~/[~&\\\/;:<>#.,'"%?!]/g;
 		return hideChars.replace(key.replace(' ', '_'), '').toLowerCase().trim();
 	}
-	#end
+	#end*/
 
-	#if LUA_ALLOWED
+	/*#if LUA_ALLOWED
 	public static function addLuaCallbacks(lua:State) {
 		Lua_helper.add_callback(lua, "getTranslationPhrase", function(key:String, ?defaultPhrase:String, ?values:Array<Dynamic> = null) {
 			return getPhrase(key, defaultPhrase, values);
@@ -102,5 +102,5 @@ class Language
 			return getFileTranslation(key);
 		});
 	}
-	#end
+	#end*/
 }
