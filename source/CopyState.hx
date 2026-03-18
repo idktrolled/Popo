@@ -20,7 +20,6 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#if mobile
 package;
 
 import lime.utils.Assets as LimeAssets;
@@ -247,4 +246,3 @@ class CopyState extends MusicBeatState
 		return (maxLoopTimes <= 0);
 	}
 }
-#end
