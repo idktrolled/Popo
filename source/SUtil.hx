@@ -20,7 +20,6 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#if mobile
 package;
 
 /**
@@ -83,4 +82,3 @@ class SUtil
 	#end
 	#end
 }
-#end
