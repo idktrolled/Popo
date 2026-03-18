@@ -42,11 +42,11 @@ class Main extends Sprite
 	{
 		super();
 		#if mobile
-		#if android
-		StorageUtil.requestPermissions();
-		#end
-		Sys.setCwd(StorageUtil.getStorageDirectory());
-		#end
+ 		#if android
+ 		SUtil.requestPermissions();
+ 		#end
+ 		Sys.setCwd(SUtil.getStorageDirectory());
+ 		#end
 		
 		if (stage != null)
 		{
@@ -88,7 +88,7 @@ class Main extends Sprite
 		initialState = TitleState;
 		#end
 
-		game = new FlxGame(gameWidth, gameHeight, #if COPYSTATE_ALLOWED !CopyState.checkExistingFiles() ? CopyState : #end initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
+		game = new FlxGame(gameWidth, gameHeight, #if mobile CopyState.checkExistingFiles() ? initialState : CopyState #else initialState #end, zoom, framerate, framerate, skipSplash, startFullscreen);
 
 		addChild(game);
 
