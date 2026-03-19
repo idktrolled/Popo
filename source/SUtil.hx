@@ -26,6 +26,9 @@ package;
  * A storage class for mobile.
  * @author Karim Akra and Homura Akemi (HomuHomu833)
  */
+import sys.FileSystem;
+import sys.io.File;
+import sys.io.Process;
 class SUtil
 {
 	#if sys
