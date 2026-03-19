@@ -1,7 +1,6 @@
-package mobile.states;
+package;
 
 #if mobile
-import TitleState;
 import lime.utils.Assets as LimeAssets;
 import openfl.utils.Assets as OpenFLAssets;
 import openfl.utils.ByteArray;
