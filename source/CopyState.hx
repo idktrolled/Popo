@@ -42,7 +42,7 @@ class CopyState extends MusicBeatState
 		checkExistingFiles();
 		if (maxLoopTimes <= 0)
 		{
-			FlxG.switchState(new Init());
+			FlxG.switchState(new TitleState());
 			return;
 		}
 
