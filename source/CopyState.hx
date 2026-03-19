@@ -8,6 +8,7 @@ import haxe.io.Path;
 import flixel.ui.FlxBar;
 import flixel.ui.FlxBar.FlxBarFillDirection;
 import lime.system.ThreadPool;
+import flixel.addons.util.FlxAsyncLoop;
 import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
