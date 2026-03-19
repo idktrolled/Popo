@@ -1,4 +1,4 @@
-name: maina
+name: mainaq
 on:
  push:
 jobs:
