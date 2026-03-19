@@ -7,16 +7,12 @@ import openfl.utils.ByteArray;
 import haxe.io.Path;
 import flixel.ui.FlxBar;
 import flixel.ui.FlxBar.FlxBarFillDirection;
-import lime.system.ThreadPool;
 import flixel.addons.util.FlxAsyncLoop;
 import sys.FileSystem;
 import sys.io.File;
-import sys.io.Process;
 
-/**
- * ...
- * @author: Karim Akra
- */
+using StringTools;
+
 class CopyState extends MusicBeatState
 {
 	public static var locatedFiles:Array<String> = [];
@@ -34,24 +30,38 @@ class CopyState extends MusicBeatState
 	var canUpdate:Bool = true;
 	var shouldCopy:Bool = false;
 
-	private static final textFilesExtensions:Array<String> = ['ini', 'txt', 'xml', 'hxs', 'hx', 'lua', 'json', 'frag', 'vert'];
+	// 🔥 LIMITE POR EJECUCIÓN (EVITA REINICIOS)
+	var maxPerRun:Int = 50;
+
+	private static final textFilesExtensions:Array<String> = [
+		'ini','txt','xml','hxs','hx','lua','json','frag','vert'
+	];
 
 	override function create()
 	{
 		locatedFiles = [];
 		maxLoopTimes = 0;
+
 		checkExistingFiles();
+
+		// 🔥 CARGAR PROGRESO GUARDADO
+		if (FlxG.save.data.copyProgress != null)
+			loopTimes = FlxG.save.data.copyProgress;
+
 		if (maxLoopTimes <= 0)
 		{
 			FlxG.switchState(new TitleState());
 			return;
 		}
 
-		SUtil.showPopUp("Seems like you have some missing files that are necessary to run the game\nPress OK to begin the copy process", "Notice!");
-		
+		SUtil.showPopUp(
+			"Missing files detected.\nPress OK to begin copying.",
+			"Notice!"
+		);
+
 		shouldCopy = true;
 
-		add(new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xffcaff4d));
+		add(new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xffcaff4d));
 
 		loadingImage = new FlxSprite(0, 0, Paths.image('menuBG'));
 		loadingImage.setGraphicSize(0, FlxG.height);
@@ -59,7 +69,8 @@ class CopyState extends MusicBeatState
 		loadingImage.screenCenter();
 		add(loadingImage);
 
-		bottomBG = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
+		bottomBG = new FlxSprite(0, FlxG.height - 26)
+			.makeGraphic(FlxG.width, 26, 0xFF000000);
 		bottomBG.alpha = 0.6;
 		add(bottomBG);
 
@@ -67,9 +78,7 @@ class CopyState extends MusicBeatState
 		loadedText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER);
 		add(loadedText);
 
-		var ticks:Int = 15;
-		if (maxLoopTimes <= 15)
-			ticks = 1;
+		var ticks:Int = 5; // 🔥 MÁS ESTABLE
 
 		copyLoop = new FlxAsyncLoop(maxLoopTimes, copyAsset, ticks);
 		add(copyLoop);
@@ -82,32 +91,142 @@ class CopyState extends MusicBeatState
 	{
 		if (shouldCopy && copyLoop != null)
 		{
+			// 🔥 GUARDAR PROGRESO CONSTANTEMENTE
+			FlxG.save.data.copyProgress = loopTimes;
+			FlxG.save.flush();
+
 			if (copyLoop.finished && canUpdate)
 			{
-				if (failedFiles.length > 0)
-				{
-					SUtil.showPopUp(failedFiles.join('\n'), 'Failed To Copy ${failedFiles.length} File.');
-					if (!FileSystem.exists('logs'))
-						FileSystem.createDirectory('logs');
-					File.saveContent('logs/' + Date.now().toString().replace(' ', '-').replace(':', "'") + '-CopyState' + '.txt', failedFilesStack.join('\n'));
-				}
 				canUpdate = false;
-				FlxG.sound.play(Paths.sound('confirmMenu')).onComplete = () -> {
-					FlxG.switchState(new TitleState());
-				};
+
+				// 🔥 SOLO TERMINA SI YA COPIÓ TODO
+				if (loopTimes >= maxLoopTimes)
+				{
+					if (failedFiles.length > 0)
+					{
+						SUtil.showPopUp(
+							failedFiles.join('\n'),
+							'Failed: ${failedFiles.length} files'
+						);
+					}
+
+					FlxG.sound.play(Paths.sound('confirmMenu')).onComplete = () ->
+					{
+						FlxG.switchState(new TitleState());
+					};
+				}
 			}
 
-			if (maxLoopTimes == 0)
-				loadedText.text = "Completed!";
-			else
-				loadedText.text = '$loopTimes/$maxLoopTimes';
+			loadedText.text = (maxLoopTimes > 0)
+				? '$loopTimes/$maxLoopTimes'
+				: 'Completed!';
 		}
+
 		super.update(elapsed);
 	}
 
 	public function copyAsset()
 	{
+		// 🔥 PROTECCIÓN TOTAL (EVITA CRASH)
+		if (loopTimes >= locatedFiles.length || loopTimes >= maxLoopTimes)
+			return;
+
+		// 🔥 LIMITE POR EJECUCIÓN (CLAVE)
+		if (loopTimes >= maxPerRun)
+			return;
+
 		var file = locatedFiles[loopTimes];
+		loopTimes++;
+
+		if (!FileSystem.exists(file))
+		{
+			var directory = Path.directory(file);
+
+			if (!FileSystem.exists(directory))
+				SUtil.mkDirs(directory);
+
+			try
+			{
+				var assetPath = getFile(file);
+
+				if (OpenFLAssets.exists(assetPath))
+				{
+					if (textFilesExtensions.contains(Path.extension(file)))
+						createContentFromInternal(file);
+					else
+						File.saveBytes(file, getFileBytes(assetPath));
+				}
+				else
+				{
+					failedFiles.push(assetPath + " (Not found)");
+					failedFilesStack.push(assetPath);
+				}
+			}
+			catch (e:haxe.Exception)
+			{
+				failedFiles.push(file + " (" + e.message + ")");
+				failedFilesStack.push(file);
+			}
+		}
+	}
+
+	public function createContentFromInternal(file:String)
+	{
+		try
+		{
+			var fileData:String = OpenFLAssets.getText(getFile(file));
+			if (fileData == null) fileData = '';
+
+			File.saveContent(file, fileData);
+		}
+		catch (e:haxe.Exception)
+		{
+			failedFiles.push(file + " (" + e.message + ")");
+		}
+	}
+
+	public function getFileBytes(file:String):ByteArray
+	{
+		// 🔥 ARREGLADO PARA ANDROID
+		return OpenFLAssets.getBytes(file);
+	}
+
+	public static function getFile(file:String):String
+	{
+		if (OpenFLAssets.exists(file)) return file;
+
+		@:privateAccess
+		for (library in LimeAssets.libraries.keys())
+		{
+			if (OpenFLAssets.exists('$library:$file') && library != 'default')
+				return '$library:$file';
+		}
+
+		return file;
+	}
+
+	public static function checkExistingFiles():Bool
+	{
+		// 🔥 FILTRADO CORRECTO
+		locatedFiles = OpenFLAssets.list().filter(f -> f.startsWith('assets/'));
+
+		var filesToRemove:Array<String> = [];
+
+		for (file in locatedFiles)
+		{
+			if (FileSystem.exists(file))
+				filesToRemove.push(file);
+		}
+
+		for (file in filesToRemove)
+			locatedFiles.remove(file);
+
+		maxLoopTimes = locatedFiles.length;
+
+		return (maxLoopTimes <= 0);
+	}
+}
+#end		var file = locatedFiles[loopTimes];
 		loopTimes++;
 		if (!FileSystem.exists(file))
 		{
