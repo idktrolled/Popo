@@ -540,8 +540,6 @@ class PlayState extends MusicBeatState
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD);
 
-		FlxCamera.set_defaultCameras([camGame]);
-
 		persistentUpdate = true;
 		persistentDraw = true;
 
