@@ -86,10 +86,6 @@ class Main extends Sprite
 		}
 		#end
 
-		#if !debug
-		initialState = TitleState;
-		#end
-
 		addChild(new FlxGame(game.width, game.height, #if (mobile && MODS_ALLOWED) CopyState.checkExistingFiles() ? game.initialState : CopyState #else game.initialState #end, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
 		
 		#if mobile
@@ -98,8 +94,6 @@ class Main extends Sprite
 		toggleFPS(FlxG.save.data.fps);
 		#end
 	}
-
-	var game:FlxGame;
 
 	var fpsCounter:FPS;
 
