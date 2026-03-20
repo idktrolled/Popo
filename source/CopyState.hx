@@ -1,25 +1,3 @@
-/*
- * Copyright (C) 2025 Mobile Porting Team
- *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- */
-
 package;
 
 #if mobile
@@ -65,13 +43,13 @@ class CopyState extends MusicBeatState
 			return;
 		}
 
-		CoolUtil.showPopUp("Seems like you have some missing files that are necessary to run the game\nPress OK to begin the copy process", Language.getPhrase('mobile_notice', 'Notice!'));
+		CoolUtil.showPopUp("Seems like you have some missing files that are necessary to run the game\nPress OK to begin the copy process", "Notice!");
 
 		shouldCopy = true;
 
-		add(new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xffcaff4d));
+		add(new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xfffde871));
 
-		loadingImage = new FlxSprite(0, 0, Paths.image('funkay'));
+		loadingImage = new FlxSprite(0, 0, Paths.image('menuBG'));
 		loadingImage.setGraphicSize(0, FlxG.height);
 		loadingImage.updateHitbox();
 		loadingImage.screenCenter();
@@ -111,10 +89,9 @@ class CopyState extends MusicBeatState
 				if (failedFiles.length > 0)
 				{
 					CoolUtil.showPopUp(failedFiles.join('\n'), 'Failed To Copy ${failedFiles.length} File.');
-					final folder:String = #if android StorageUtil.getExternalStorageDirectory() + #else Sys.getCwd() + #end 'logs/';
-					if (!FileSystem.exists(folder))
-						FileSystem.createDirectory(folder);
-					File.saveContent(folder + Date.now().toString().replace(' ', '-').replace(':', "'") + '-CopyState' + '.txt', failedFilesStack.join('\n'));
+					if (!FileSystem.exists('logs'))
+						FileSystem.createDirectory('logs');
+					File.saveContent('logs/' + Date.now().toString().replace(' ', '-').replace(':', "'") + '-CopyState' + '.txt', failedFilesStack.join('\n'));
 				}
 				
 				FlxG.sound.play(Paths.sound('confirmMenu')).onComplete = () ->
@@ -149,16 +126,7 @@ class CopyState extends MusicBeatState
 					if (textFilesExtensions.contains(Path.extension(file)))
 						createContentFromInternal(file);
 					else
-					{
-						var path:String = '';
-						#if android
-						if (file.startsWith('mods/'))
-							path = StorageUtil.getExternalStorageDirectory() + file;
-						else
-						#end
-							path = file;
-						File.saveBytes(path, getFileBytes(getFile(file)));
-					}		
+						File.saveBytes(file, getFileBytes(getFile(file)));
 				}
 				else
 				{
@@ -178,10 +146,6 @@ class CopyState extends MusicBeatState
 	{
 		var fileName = Path.withoutDirectory(file);
 		var directory = Path.directory(file);
-		#if android
-		if (fileName.startsWith('mods/'))
-			directory = StorageUtil.getExternalStorageDirectory() + directory;
-		#end
 		try
 		{
 			var fileData:String = OpenFLAssets.getText(getFile(file));
@@ -230,14 +194,9 @@ class CopyState extends MusicBeatState
 
 		// removes unwanted assets
 		var assets = locatedFiles.filter(folder -> folder.startsWith('assets/'));
-		var mods = locatedFiles.filter(folder -> folder.startsWith('mods/'));
+		var mods = locatedFiles.filter(folder -> folder.startsWith('content/'));
 		locatedFiles = assets.concat(mods);
 		locatedFiles = locatedFiles.filter(file -> !FileSystem.exists(file));
-		#if android
-		for (file in locatedFiles)
-			if (file.startsWith('mods/'))
-				locatedFiles = locatedFiles.filter(file -> !FileSystem.exists(StorageUtil.getExternalStorageDirectory() + file));
-		#end
 
 		var filesToRemove:Array<String> = [];
 
