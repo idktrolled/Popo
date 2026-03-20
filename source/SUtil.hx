@@ -1,4 +1,4 @@
-package mobile.backend;
+package;
 
 /**
  * A storage class for mobile.
