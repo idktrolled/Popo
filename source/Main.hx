@@ -90,10 +90,8 @@ class Main extends Sprite
 		initialState = TitleState;
 		#end
 
-		game = new FlxGame(game.width, game.height, #if mobile CopyState.checkExistingFiles() ? game.initialState : CopyState #else game.initialState #end, game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
-
-		addChild(game);
-
+		addChild(new FlxGame(game.width, game.height, #if (mobile && MODS_ALLOWED) CopyState.checkExistingFiles() ? game.initialState : CopyState #else game.initialState #end, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
+		
 		#if mobile
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsCounter);
