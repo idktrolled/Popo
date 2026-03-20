@@ -44,11 +44,11 @@ class Main extends Sprite
 	{
 		super();
 		#if mobile
-		#if android
-		StorageUtil.requestPermissions();
-		#end
-		Sys.setCwd(StorageUtil.getStorageDirectory());
-		#end
+ 		#if android
+ 		SUtil.requestPermissions();
+ 		#end
+ 		Sys.setCwd(SUtil.getStorageDirectory());
+ 		#end
 		
 		if (stage != null)
 		{
