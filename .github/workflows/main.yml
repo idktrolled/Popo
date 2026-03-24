@@ -10,7 +10,7 @@ jobs:
       - name: setup-haxe
         uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.3.7
+          haxe-version: 4.3.6
       - name: set up java
         uses: actions/setup-java@main
         with:
