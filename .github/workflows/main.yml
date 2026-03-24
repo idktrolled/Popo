@@ -1,4 +1,4 @@
-name: mainaq
+name: main
 on:
  push:
 jobs:
@@ -20,7 +20,7 @@ jobs:
         run: |
           haxelib setup ~/haxelib
           haxelib git lime https://github.com/kittycathy233/lime
-          haxelib install openfl
+          haxelib install openfl 9.4.2
           haxelib install flixel
           haxelib install flixel-addons
           haxelib install flixel-ui
